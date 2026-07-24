@@ -3,118 +3,218 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inspiring Quotes</title>
+    <title>xero quote</title>
 
     <meta
       name="description"
-      content="Read and navigate inspiring quotes with a clean and modern interface."
+      content="xero quote — Illuminate your mind, one quote at a time."
     />
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="App.js" defer></script>
 
     <style>
+      :root {
+        --bg-1: #2f0a4f;
+        --bg-2: #131d3b;
+        --bg-3: #3b0f72;
+        --card: rgba(26, 29, 61, 0.7);
+        --card-border: rgba(187, 166, 255, 0.22);
+        --muted: #b9b4cf;
+        --text: #e9e7f3;
+        --accent: #d6a8ff;
+        --accent-2: #aee3ff;
+      }
+
+      body {
+        background:
+          radial-gradient(1200px 700px at 0% 0%, #4b0d66 0%, transparent 55%),
+          radial-gradient(1000px 600px at 100% 20%, #0f3753 0%, transparent 50%),
+          linear-gradient(135deg, var(--bg-1), var(--bg-2) 50%, var(--bg-3));
+        color: var(--text);
+      }
+
+      .brand-gradient {
+        background: linear-gradient(135deg, #f1b4ff, #be9bff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .glass {
+        background: linear-gradient(
+          135deg,
+          rgba(42, 31, 74, 0.85),
+          rgba(29, 40, 74, 0.85)
+        );
+        border: 1px solid var(--card-border);
+        box-shadow:
+          0 20px 45px rgba(7, 8, 22, 0.35),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .chip {
+        border: 1px solid rgba(180, 193, 255, 0.2);
+        background: rgba(41, 47, 83, 0.6);
+        color: #bce8ff;
+      }
+
+      .btn-dark {
+        border: 1px solid rgba(189, 193, 235, 0.25);
+        background: rgba(44, 44, 82, 0.5);
+      }
+
+      .btn-dark:hover {
+        background: rgba(66, 66, 116, 0.6);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #d9a8ff, #c69dff);
+        color: #35125b;
+      }
+
+      .btn-primary:hover {
+        filter: brightness(1.05);
+      }
+
+      .quote-fade {
+        animation: fadeInUp 0.35s ease-out;
+      }
+
       @keyframes fadeInUp {
         from {
           opacity: 0;
-          transform: translateY(16px);
+          transform: translateY(10px);
         }
         to {
           opacity: 1;
           transform: translateY(0);
         }
       }
-
-      .quote-fade {
-        animation: fadeInUp 0.45s ease-out;
-      }
-
-      .gradient-text {
-        background: linear-gradient(135deg, #dc2626, #f87171);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
     </style>
   </head>
 
-  <body
-    class="min-h-screen bg-gradient-to-br from-rose-50 via-red-50 to-slate-100 text-gray-800 antialiased"
-  >
-    <main class="w-full px-4 py-10 md:py-14">
-      <section
-        class="mx-auto flex w-full max-w-4xl flex-col items-center gap-8"
-        aria-labelledby="page-title"
+  <body class="min-h-screen antialiased">
+    <!-- Top nav -->
+    <header class="border-b border-white/10">
+      <div
+        class="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-6"
       >
-        <header class="text-center">
-          <h1
-            id="page-title"
-            class="text-4xl md:text-5xl font-extrabold gradient-text"
-          >
-            Inspiring Quotes
-          </h1>
-          <p class="mt-3 text-sm md:text-base text-gray-600">
-            Discover motivation, one quote at a time.
-          </p>
-        </header>
+        <h1 class="text-6xl md:text-7xl font-black leading-none brand-gradient">
+          XERO
+        </h1>
 
-        <article
-          class="w-full rounded-2xl border border-white/60 bg-white/80 backdrop-blur shadow-2xl p-6 md:p-10 transition-transform duration-300 hover:scale-[1.01]"
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          <div class="quote-fade">
-            <p
-              id="quoteText"
-              class="text-xl md:text-3xl font-serif leading-relaxed text-gray-900 mb-6"
-            ></p>
+        <nav class="hidden md:flex items-center gap-10 text-3xl">
+          <a class="text-[#d8b3ff] border-b-2 border-[#d8b3ff] pb-1" href="#">Wisdom</a>
+          <a class="text-[#a4a0b8] hover:text-[#d8b3ff]" href="#">Motivation</a>
+          <a class="text-[#a4a0b8] hover:text-[#d8b3ff]" href="#">Serenity</a>
+        </nav>
 
-            <div class="flex items-end justify-between gap-4">
-              <p
-                id="quoteAuthor"
-                class="text-lg md:text-xl italic text-red-700 font-semibold"
-              ></p>
-              <p
-                id="quoteId"
-                class="text-xs md:text-sm text-gray-400 font-mono"
-              ></p>
-            </div>
+        <div class="flex items-center gap-4 text-2xl text-[#d8b3ff]">
+          <button aria-label="Settings">⚙️</button>
+          <button aria-label="Profile">◉</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto w-full max-w-6xl px-4 py-14 md:py-20">
+      <section class="text-center">
+        <h2 class="text-6xl md:text-7xl font-extrabold brand-gradient uppercase">
+          xero quote
+        </h2>
+        <p class="mt-4 text-3xl italic text-[#a8a6bf]">
+          Illuminate your mind, one quote at a time
+        </p>
+      </section>
+
+      <article
+        class="glass mt-12 rounded-3xl px-8 py-10 md:px-14 md:py-12"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        <div class="quote-fade">
+          <div class="mb-8 flex justify-center">
+            <span class="chip rounded-full px-5 py-2 text-sm font-bold tracking-[0.14em]">
+              #WISDOM
+            </span>
           </div>
-        </article>
+
+          <p class="text-7xl md:text-8xl font-black text-[#4f3a7f]/40 leading-none">”</p>
+
+          <p
+            id="quoteText"
+            class="-mt-2 text-center text-3xl md:text-6xl leading-snug text-[#d9def3]"
+          ></p>
+
+          <p
+            id="quoteAuthor"
+            class="mt-6 text-center text-2xl md:text-4xl text-[#9be7ff]"
+          ></p>
+
+          <p id="quoteId" class="mt-2 text-center text-sm text-[#8d88a8] font-mono"></p>
+        </div>
 
         <nav
-          class="mt-2 flex flex-wrap items-center justify-center gap-3 md:gap-4"
+          class="mt-12 flex flex-wrap items-center justify-center gap-4 md:gap-6"
           aria-label="Quote navigation"
         >
           <button
             id="prevBtn"
             aria-label="Show previous quote"
-            class="inline-flex items-center justify-center rounded-full bg-red-600 px-6 py-3 text-sm md:text-base font-semibold text-white shadow-lg transition-all duration-200 hover:bg-red-700 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-200"
+            class="btn-dark rounded-2xl px-8 py-4 text-xl md:text-3xl text-[#d7d4ea] transition-all"
           >
-            Previous
-          </button>
-
-          <button
-            id="nextBtn"
-            aria-label="Show next quote"
-            class="inline-flex items-center justify-center rounded-full bg-red-600 px-6 py-3 text-sm md:text-base font-semibold text-white shadow-lg transition-all duration-200 hover:bg-red-700 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-200"
-          >
-            Next
+            ‹ Previous
           </button>
 
           <button
             id="randomBtn"
             aria-label="Show random quote"
-            class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm md:text-base font-semibold text-red-700 border border-red-200 shadow-md transition-all duration-200 hover:bg-red-50 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-200"
+            class="btn-primary rounded-2xl px-10 py-4 text-xl md:text-3xl font-bold transition-all"
           >
-            Random
+            ⟳ Random
+          </button>
+
+          <button
+            id="nextBtn"
+            aria-label="Show next quote"
+            class="btn-dark rounded-2xl px-8 py-4 text-xl md:text-3xl text-[#d7d4ea] transition-all"
+          >
+            Next ›
           </button>
         </nav>
+      </article>
 
-        <footer class="pt-2 text-xs text-gray-500 text-center">
-          Keep going — your next favorite quote is one click away.
-        </footer>
+      <section class="mt-10 text-center">
+        <p class="text-2xl text-[#9e98b8]">Keep seeking, keep growing.</p>
+        <div class="mt-4 flex justify-center gap-3">
+          <span class="chip rounded-full px-4 py-1 text-sm font-bold tracking-[0.16em]">DAILY DOSE</span>
+          <span class="chip rounded-full px-4 py-1 text-sm font-bold tracking-[0.16em]">MINDFULNESS</span>
+        </div>
       </section>
     </main>
+
+    <footer class="mt-16 border-t border-white/10">
+      <div
+        class="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm md:flex-row"
+      >
+        <p class="tracking-[0.2em] text-[#c5bce2] uppercase">xero quote</p>
+        <p class="text-[#b9b4cf]">
+          © 2026 xero quote. Built by
+          <a
+            href="https://dev-portfolio-orcin-six.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[#d8b3ff] underline underline-offset-4 hover:text-[#f0d0ff]"
+          >
+            dev-portfolio-orcin-six.vercel.app
+          </a>
+        </p>
+        <div class="flex gap-6 text-[#c5bce2]">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
