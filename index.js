@@ -1,6 +1,6 @@
 const urlToRequest = 'https://dummyjson.com/quotes';
-let quotes = [];
-let currentIndex = 0;
+
+let currentQuote = null;
 
 // Get DOM elements
 const quoteText = document.getElementById('quoteText');
@@ -11,62 +11,77 @@ const nextBtn = document.getElementById('nextBtn');
 const prevBtn = document.getElementById('prevBtn');
 const randomBtn = document.getElementById('randomBtn');
 
-function renderQuote(index) {
-    if (!quotes.length) return;
-    const q = quotes[index];
-    
+function renderQuote(q) {
+    if (!q) return;
+
     // Remove the animation class
-    quoteText.parentElement.classList.remove('quote-fade');
-    
-    // Trigger reflow to restart animation
-    void quoteText.parentElement.offsetWidth;
-    
-    // Add content and animation class
+    if (quoteText?.parentElement) {
+        quoteText.parentElement.classList.remove('quote-fade');
+        void quoteText.parentElement.offsetWidth; // restart animation
+    }
+
     if (quoteText) quoteText.textContent = `"${q.quote}"`;
     if (quoteAuthor) quoteAuthor.textContent = `— ${q.author}`;
     if (quoteIdEl) quoteIdEl.textContent = `#${q.id}`;
-    
-    // Add the animation class back
-    quoteText.parentElement.classList.add('quote-fade');
+
+    if (quoteText?.parentElement) {
+        quoteText.parentElement.classList.add('quote-fade');
+    }
 }
 
-function goToNext() {
-    if (!quotes.length) return;
-    currentIndex = (currentIndex + 1) % quotes.length;
-    renderQuote(currentIndex);
+async function fetchRandomQuote() {
+    const response = await fetch(`${urlToRequest}/random`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const quote = await response.json();
+    currentQuote = quote;
+    renderQuote(quote);
 }
 
-function goToPrev() {
-    if (!quotes.length) return;
-    currentIndex = (currentIndex - 1 + quotes.length) % quotes.length;
-    renderQuote(currentIndex);
+async function fetchQuoteById(id) {
+    const response = await fetch(`${urlToRequest}/${id}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const quote = await response.json();
+    currentQuote = quote;
+    renderQuote(quote);
 }
 
-function showRandomQuote() {
-    if (!quotes.length) return;
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-    currentIndex = randomIndex;
-    renderQuote(currentIndex);
+async function goToNext() {
+    try {
+        if (!currentQuote) {
+            await fetchRandomQuote();
+            return;
+        }
+        await fetchQuoteById(currentQuote.id + 1);
+    } catch (error) {
+        console.error('Failed to load next quote:', error);
+        await fetchRandomQuote();
+    }
 }
 
-// Fetch quotes and initialize
-fetch(urlToRequest)
-    .then(response => {
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return response.json();
-    })
-    .then(data => {
-        quotes = data.quotes || [];
-        if (!quotes.length) throw new Error('No quotes returned');
-        showRandomQuote(); // Start with a random quote
-    })
-    .catch(error => {
-        console.error('Failed to load quotes:', error);
-        quoteText.textContent = 'Failed to load quotes. Please try again later.';
-    });
+async function goToPrev() {
+    try {
+        if (!currentQuote) {
+            await fetchRandomQuote();
+            return;
+        }
+        await fetchQuoteById(Math.max(1, currentQuote.id - 1));
+    } catch (error) {
+        console.error('Failed to load previous quote:', error);
+        await fetchRandomQuote();
+    }
+}
+
+// Fetch quotes and initialize with a random quote
+fetchRandomQuote().catch(error => {
+    console.error('Failed to load quotes:', error);
+    if (quoteText) quoteText.textContent = 'Failed to load quotes. Please try again later.';
+});
 
 // Add event listeners
 if (nextBtn) nextBtn.addEventListener('click', goToNext);
 if (prevBtn) prevBtn.addEventListener('click', goToPrev);
-if (randomBtn) randomBtn.addEventListener('click', showRandomQuote);
-
+if (randomBtn) randomBtn.addEventListener('click', () => {
+    fetchRandomQuote().catch(error => {
+        console.error('Failed to load random quote:', error);
+    });
+});
