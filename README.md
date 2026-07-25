@@ -45,4 +45,4 @@ It’s a simple yet elegant web app that demonstrates clean UI design and smooth
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/your-username/quote-fetching-app.git
+git clone [https://github.com/Rahim-Ullah/get-a-new-quote.git](https://github.com/Rahim-Ullah/get-a-new-quote.git)
