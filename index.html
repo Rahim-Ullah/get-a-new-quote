@@ -76,6 +76,12 @@
       .btn-primary:hover {
         filter: brightness(1.05);
       }
+      .butn:hover {
+        cursor: pointer;
+      }
+      butn:active {
+        scale: .8;
+      }
 
       .quote-fade {
         animation: fadeInUp 0.35s ease-out;
@@ -134,7 +140,7 @@
           <button
             id="prevBtn"
             aria-label="Show previous quote"
-            class="btn-dark rounded-2xl px-8 py-4 text-xl md:text-3xl text-[#d7d4ea] transition-all"
+            class="btn-dark butn rounded-2xl px-8 py-4 text-xl md:text-3xl text-[#d7d4ea] transition-all"
           >
             ‹ Previous
           </button>
@@ -142,7 +148,7 @@
           <button
             id="randomBtn"
             aria-label="Show random quote"
-            class="btn-primary rounded-2xl px-10 py-4 text-xl md:text-3xl font-bold transition-all"
+            class="btn-primary butn rounded-2xl px-10 py-4 text-xl md:text-3xl font-bold transition-all"
           >
             ⟳ Random
           </button>
@@ -150,7 +156,7 @@
           <button
             id="nextBtn"
             aria-label="Show next quote"
-            class="btn-dark rounded-2xl px-8 py-4 text-xl md:text-3xl text-[#d7d4ea] transition-all"
+            class="btn-dark butn rounded-2xl px-8 py-4 text-xl md:text-3xl text-[#d7d4ea] transition-all"
           >
             Next ›
           </button>
